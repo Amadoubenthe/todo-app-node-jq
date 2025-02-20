@@ -6,6 +6,7 @@
 
 :root{
     --primary-color: #1a79ff;
+    --secondary-color: #E0A800
 }
 
 body{
@@ -59,12 +60,12 @@ p{
 }
 
 .form .btn{
-    background: var(--primary-color);
     padding: 0.62rem;
     border: none;
     border-radius: 0.3rem;
     color: white;
 }
+
 
 .todo-element{
     display: flex;
@@ -98,12 +99,25 @@ p{
     cursor: pointer;
 }
 
+.btn-add-bg{
+    background: var(--primary-color)!important;
+}
+
+.btn-edit-bg{
+    background: var(--secondary-color)!important;
+}
+
 .hidden-remove{
     display: none;
     visibility: hidden; 
 }
 
 .hidden-edit{
+    display: none;
+    visibility: hidden; 
+}
+
+.hidden-btn{
     display: none;
     visibility: hidden; 
 }

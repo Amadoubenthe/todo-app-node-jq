@@ -27,10 +27,13 @@ $(document).ready(function() {
                 title: taskName
             };
         
-            console.log(`Le monde : ${baseUrl}/${taskId}`);
-            
             saveTodo(`${baseUrl}/${taskId}`, "PUT", updatedTask);
             localStorage.clear()
+            $(".edit-btn-text").addClass("hidden-btn")
+            $(".add-btn-text").removeClass("hidden-btn")
+
+            $("#btn-add").removeClass("btn-edit-bg")
+            $("#btn-add").addClass("btn-add-bg")
         }
     });
 
@@ -57,6 +60,14 @@ $(document).ready(function() {
         const id = $(this).closest(".todo-element").find(".hidden-edit").text();
         const taskText = $(this).closest(".todo-element").find("p").text();
         $("#todoName").val(taskText);
+
+        $(".add-btn-text").addClass("hidden-btn")
+        $(".edit-btn-text").removeClass("hidden-btn")
+
+        $("#btn-add").removeClass("btn-add-bg")
+        $("#btn-add").addClass("btn-edit-bg")
+            
+
         localStorage.setItem("taskId", id)
         localStorage.setItem("editMode", true)
     })
@@ -76,6 +87,15 @@ $(document).ready(function() {
     });
 
 });
+
+function generateBtnSubmit(typeBtn, text) {
+    $("#action-form").append(
+        `
+            <button type="submit" class="btn btn-${typeBtn} mt-1" id="btn-submit">${text} +</button>
+
+        `
+    )
+}
 
 // Function to add a todo
 function saveTodo(url, method, todoData) {
@@ -99,7 +119,7 @@ function saveTodo(url, method, todoData) {
 function loadData() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8000/api/todos",
+        url: baseUrl,
         success: function(response) {
             if (Array.isArray(response) && response.length > 0) {
                 $("#todos").empty(); // Vider avant d'ajouter
@@ -143,7 +163,7 @@ function deleteTodo(todoId, todoElement) {
     console.log("id: ", todoId);
     
     $.ajax({
-        url: `http://localhost:8000/api/todos/${todoId}`,
+        url: `${baseUrl}/${todoId}`,
         method: "DELETE",
         success: function () {
             console.log(`Tâche ${todoId} supprimée avec succès.`);
@@ -160,10 +180,8 @@ function deleteTodo(todoId, todoElement) {
 Fonction pour modifier le statut d'une tâche
 */
 function updateTodoStatus(todoId, completed, todoElement) {
-    console.log(todoId, completed, todoElement);
-    
     $.ajax({
-        url: `http://localhost:8000/api/todos/${todoId}`,
+        url: `${baseUrl}/${todoId}`,
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify({ completed }),
