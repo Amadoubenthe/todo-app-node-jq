@@ -1,11 +1,6 @@
-
-
-
 const Todo = require("../models/todo.model");
 
 const addTodo = async (req, res) => {
-  console.log("bagnan: ",req.body);
-  
   try {
     const newTodo = await Todo({ ...req.body });
     await newTodo.save();
