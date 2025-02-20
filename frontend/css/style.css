@@ -17,11 +17,10 @@ body{
     background: var(--primary-color);
 }
 
-h1{
+.title{
+    color: #ccc;
     text-align: center;
-    margin-bottom: 2rem;
-    color: white;
-    padding-top: 2rem;
+    padding-top: 1rem;
 }
 
 p{
@@ -94,7 +93,17 @@ p{
     cursor: pointer;
 }
 
-.hidden{
+.edit{
+    color: orange;
+    cursor: pointer;
+}
+
+.hidden-remove{
+    display: none;
+    visibility: hidden; 
+}
+
+.hidden-edit{
     display: none;
     visibility: hidden; 
 }

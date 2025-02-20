@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container-fluid bg">
-        <h1>Todo app</h1>
+        <h1 class="title">Todo app</h1>
         <div class="todo-container">
             <form class="card form" method="post">
                 <div class="input-container"><input type="text" name="todoName" id="todoName" placeholder="Ajouter une todo ..."></div>
@@ -33,8 +33,13 @@
                             <span class="date">Créer le: 14-07-2025</span>
                         </div>
                     </div>
-                    <span class="remove">
-                        <i class="fa-solid fa-trash"></i>
+                    <span>
+                        <div class="hidden-remove">
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <div class="hidden-edit">
+                            <i class="fa-solid fa-pen"></i>
+                        </div>
                     </span>
                 </div>
             </div>
