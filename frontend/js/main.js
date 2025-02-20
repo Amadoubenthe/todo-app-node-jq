@@ -28,12 +28,14 @@ $(document).ready(function() {
             };
         
             saveTodo(`${baseUrl}/${taskId}`, "PUT", updatedTask);
-            localStorage.clear()
+
             $(".edit-btn-text").addClass("hidden-btn")
             $(".add-btn-text").removeClass("hidden-btn")
 
             $("#btn-add").removeClass("btn-edit-bg")
             $("#btn-add").addClass("btn-add-bg")
+
+            localStorage.clear()
         }
     });
 
@@ -88,15 +90,6 @@ $(document).ready(function() {
 
 });
 
-function generateBtnSubmit(typeBtn, text) {
-    $("#action-form").append(
-        `
-            <button type="submit" class="btn btn-${typeBtn} mt-1" id="btn-submit">${text} +</button>
-
-        `
-    )
-}
-
 // Function to add a todo
 function saveTodo(url, method, todoData) {
     $.ajax({
@@ -123,37 +116,42 @@ function loadData() {
         success: function(response) {
             if (Array.isArray(response) && response.length > 0) {
                 $("#todos").empty(); // Vider avant d'ajouter
-                response.forEach(element => {
-                    $("#todos").append(
-                        `<div class="todo-element ${element.completed ? "completed-task" : ""}">
-                            <div class="flex">
-                                <span><input class="todo-checkbox" id="todo-checkbox" type="checkbox" ${element.completed ? "checked" : ""}></span>
-                                <div>
-                                    <p>${element.title}</p>
-                                    <span class="date">Créer le: ${element.createdAt}</span>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="remove">
-                                    <i class="fa-solid fa-trash">
-                                        <span class='hidden-remove'>${element._id}</span>
-                                    </i>
-                                </span>
-                                <span class="edit">
-                                    <i class="fa-solid fa-pen">
-                                        <span class='hidden-edit'>${element._id}</span>
-                                    </i>
-                                </span>
-                            </div>
-                        </div>`
-                    );
-                });
+                generateTodo(response)
             }
         },
         error: function(err) {
             console.error("Erreur lors du chargement des données:", err);
         }
     });
+}
+
+// Fonction pour generer le todo list
+function generateTodo(todos) {
+    todos.forEach(todo => {
+        $("#todos").append(
+            `<div class="todo-element ${todo.completed ? "completed-task" : ""}">
+                <div class="flex">
+                    <span><input class="todo-checkbox" id="todo-checkbox" type="checkbox" ${todo.completed ? "checked" : ""}></span>
+                    <div>
+                        <p>${todo.title}</p>
+                        <span class="date">Créer le: ${todo.createdAt}</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="remove">
+                        <i class="fa-solid fa-trash">
+                            <span class='hidden-remove'>${todo._id}</span>
+                        </i>
+                    </span>
+                    <span class="edit">
+                        <i class="fa-solid fa-pen">
+                            <span class='hidden-edit'>${todo._id}</span>
+                        </i>
+                    </span>
+                </div>
+            </div>`
+        );
+    })
 }
 
 /*
