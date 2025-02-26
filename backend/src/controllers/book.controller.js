@@ -28,12 +28,14 @@ const getBookById = async (req, res) => {
     const { id } = req.params;
     const book = await Book.findById(id);
     if (!book) {
-      res.status(404).send({ message: "Book not Found!" });
+      return res.status(404).send({ message: "Book not Found!" });
     }
     res.status(200).send(book);
   } catch (error) {
     console.error("Error fetching book", error);
-    res.status(500).send({ message: "Failed to fetch book" });
+    if (!res.headersSent) {
+      res.status(500).send({ message: "Failed to fetch book" });
+    }
   }
 };
 
